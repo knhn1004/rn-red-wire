@@ -1,6 +1,6 @@
 import { DrawerContentScrollView } from '@react-navigation/drawer';
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/actions';
@@ -22,7 +22,6 @@ const CustomSideDrawer = props => {
                     style={{
                         fontSize: 40,
                         textAlign: 'center',
-                        // color: Colors.black2,
                     }}
                 />
                 {mainOptions.map(item => (

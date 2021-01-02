@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider, useDispatch, useSelector } from 'react-redux';
@@ -59,11 +59,10 @@ function App() {
                 screenOptions={{
                     headerShown: false,
                 }}
+                initialRouteName="Splash"
             >
-                {auth.isAuth ? (
-                    <Fragment>
-                        <Stack.Screen name="Main" component={MainDrawer} />
-                    </Fragment>
+                {auth.isAuth && !auth.autoLoading ? (
+                    <Stack.Screen name="Main" component={MainDrawer} />
                 ) : auth.autoLoading ? (
                     <Stack.Screen name="Splash" component={Splash} />
                 ) : (

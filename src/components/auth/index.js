@@ -87,11 +87,13 @@ const AuthScreen = () => {
                                 onChangeText={handleChange('email')}
                                 onBlur={handleBlur('email')}
                                 value={values.email}
-                                renderErrorMessage={
-                                    errors.email && touched.email
+                                errorMessage={
+                                    !!errors.email && touched.email
+                                        ? errors.email
+                                        : ''
                                 }
-                                errorMessage={errors.email}
                                 errorStyle={{ color: Colors.black }}
+                                autoCapitalize="none"
                             />
                             <Input
                                 placeholder="Password"
@@ -115,11 +117,13 @@ const AuthScreen = () => {
                                         setHidePassword(prev => !prev),
                                     size: 30,
                                 }}
-                                renderErrorMessage={
-                                    errors.password && touched.password
+                                errorMessage={
+                                    !errors.password && touched.password
+                                        ? errors.password
+                                        : ''
                                 }
-                                errorMessage={errors.password}
                                 errorStyle={{ color: Colors.black }}
+                                onSubmitEditing={handleSubmit}
                             />
                             <Button
                                 title={

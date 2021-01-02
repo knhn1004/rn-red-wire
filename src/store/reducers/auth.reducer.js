@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     isAuth: false,
     error: null,
     loading: false,
-    autoLoading: true,
+    autoLoading: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
