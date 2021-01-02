@@ -6,6 +6,7 @@ import {
     LOGOUT,
     AUTO_LOAD_START,
     AUTO_LOAD_FINISHED,
+    UPDATE_USER_DATA,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -51,6 +52,11 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 autoLoading: false,
+            };
+        case UPDATE_USER_DATA:
+            return {
+                ...state,
+                ...action.payload,
             };
         default:
             return state;

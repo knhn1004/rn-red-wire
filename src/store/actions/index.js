@@ -6,6 +6,7 @@ import {
     LOGOUT,
     AUTO_LOAD_START,
     AUTO_LOAD_FINISHED,
+    UPDATE_USER_DATA,
 } from './types';
 
 export const registerUser = ({ email, password }) => async dispatch => {
@@ -115,5 +116,36 @@ export const logout = () => async dispatch => {
         });
     } catch (e) {
         console.log(e);
+    }
+};
+
+export const updateUserData = values => async (dispatch, getState) => {
+    const {
+        auth: { user },
+    } = getState();
+    dispatch({
+        type: AUTH_START,
+    });
+    try {
+        const userRef = usersCollection.doc(user.uid);
+        await userRef.update(values);
+
+        dispatch({
+            type: UPDATE_USER_DATA,
+            payload: {
+                user: {
+                    ...user,
+                    ...values,
+                },
+            },
+        });
+        dispatch({
+            type: AUTH_FINISHED,
+        });
+    } catch (e) {
+        console.log(e);
+        dispatch({
+            type: AUTH_FINISHED,
+        });
     }
 };

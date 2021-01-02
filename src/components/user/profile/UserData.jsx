@@ -3,6 +3,9 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { Button, Header, Icon, Input } from 'react-native-elements';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
+import { useDispatch, useSelector } from 'react-redux';
+import { showToast } from '../../../utils/tools';
+import { updateUserData } from '../../../store/actions';
 
 const validationSchema = Yup.object({
     firstname: Yup.string().required('First name is required'),
@@ -16,14 +19,27 @@ const validationSchema = Yup.object({
 });
 
 const UserData = () => {
+    const user = useSelector(state => state.auth.user);
+    const authLoading = useSelector(state => state.auth.loading);
+    const dispatch = useDispatch();
+
     return (
         <Formik
-            // enableReinitialize={true}
-            initialValues={{ firstname: '', lastname: '', age: 0 }}
+            enableReinitialize={true}
+            initialValues={{
+                firstname: user.firstname || '',
+                lastname: user.lastname || '',
+                age: user.age || null,
+            }}
             validationSchema={validationSchema}
             onSubmit={(values, { resetForm }) => {
-                console.log(values);
-                alert('submitted');
+                dispatch(updateUserData(values));
+                // TODO: error handling
+                showToast(
+                    'success',
+                    'Success',
+                    'Your user profile updated successfully!'
+                );
                 resetForm();
             }}
         >
@@ -64,7 +80,7 @@ const UserData = () => {
                         name="age"
                         label="Age"
                         keyboardType="number-pad"
-                        value={values.age.toString()}
+                        value={!!values.age ? values.age.toString() : null}
                         onChangeText={handleChange('age')}
                         onBlur={handleBlur('age')}
                         errorMessage={
@@ -76,6 +92,7 @@ const UserData = () => {
                         // buttonStyle={{ backgroundColor: Colors.red }}
                         icon={{ name: 'send', size: 30, color: '#fff' }}
                         onPress={handleSubmit}
+                        loading={authLoading}
                     />
                 </View>
             )}
