@@ -16,10 +16,13 @@ import {
 import { Colors } from './src/utils/tools';
 import CustomSideDrawer from './src/utils/customDrawer';
 import { ThemeProvider } from 'react-native-elements';
+import Toast from 'react-native-toast-message';
+import { View, Text } from 'react-native';
+import thunk from 'redux-thunk';
 
 const store = createStore(
     reducers,
-    composeWithDevTools(applyMiddleware(promiseMiddleware))
+    composeWithDevTools(applyMiddleware(thunk, promiseMiddleware))
 );
 
 const Drawer = createDrawerNavigator();
@@ -67,10 +70,23 @@ const theme = {
     },
 };
 
+const toastConfig = {
+    info: ({ text1, props, ...rest }) => (
+        <View style={{ height: 60, width: '100%', backgroundColor: 'pink' }}>
+            <Text>{text1}</Text>
+            <Text>{props.guid}</Text>
+        </View>
+    ),
+    // error: () => {},
+    // info: () => {},
+    // any_custom_type: () => {}
+};
+
 const reduxApp = () => (
     <Provider store={store}>
         <ThemeProvider theme={theme}>
             <App />
+            <Toast ref={ref => Toast.setRef(ref)} config={toastConfig} />
         </ThemeProvider>
     </Provider>
 );

@@ -21,8 +21,10 @@ const UserData = () => {
             // enableReinitialize={true}
             initialValues={{ firstname: '', lastname: '', age: 0 }}
             validationSchema={validationSchema}
-            onSubmit={() => {
-                console.log('submitted');
+            onSubmit={(values, { resetForm }) => {
+                console.log(values);
+                alert('submitted');
+                resetForm();
             }}
         >
             {({
@@ -62,7 +64,7 @@ const UserData = () => {
                         name="age"
                         label="Age"
                         keyboardType="number-pad"
-                        value={values.age}
+                        value={values.age.toString()}
                         onChangeText={handleChange('age')}
                         onBlur={handleBlur('age')}
                         errorMessage={

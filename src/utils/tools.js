@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { useFonts, Monoton_400Regular } from '@expo-google-fonts/monoton';
+import Toast from 'react-native-toast-message';
 
 const styles = StyleSheet.create({});
 
@@ -26,7 +27,19 @@ export const LogoText = ({ style }) => {
                     fontSize: 50,
                     ...style,
                 }}
-            >RedWire</Text>
+            >
+                RedWire
+            </Text>
         )
     );
+};
+
+export const showToast = (type, text1, text2) => {
+    Toast.show({
+        type,
+        text1,
+        text2,
+        position: 'bottom',
+        bottomOffset: 50,
+    });
 };
