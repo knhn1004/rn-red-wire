@@ -1,9 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text } from 'react-native';
 import { useFonts, Monoton_400Regular } from '@expo-google-fonts/monoton';
 import Toast from 'react-native-toast-message';
-
-const styles = StyleSheet.create({});
 
 export const Colors = {
     white: '#ffffff',
@@ -39,7 +37,8 @@ export const showToast = (type, text1, text2) => {
         type,
         text1,
         text2,
-        position: 'bottom',
-        bottomOffset: 50,
+        // position: 'bottom',
+        // bottomOffset: 50,
+        topOffset: 50,
     });
 };

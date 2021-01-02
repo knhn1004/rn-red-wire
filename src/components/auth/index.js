@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { Colors, LogoText, showToast } from '../../utils/tools';
 import { Button, Input } from 'react-native-elements';
 import { useDispatch, useSelector } from 'react-redux';
-import { registerUser } from '../../store/actions';
+import { loginUser, registerUser } from '../../store/actions';
 import { useFocusEffect } from '@react-navigation/native';
 import { CLEAN_AUTH_ERROR } from '../../store/actions/types';
 
@@ -47,17 +47,20 @@ const AuthScreen = () => {
                 <LogoText style={{ fontSize: 58 }} />
                 <Formik
                     initialValues={{
-                        email: 'test@test.com',
-                        password: 'test123',
+                        email: '',
+                        password: '',
                     }}
                     validationSchema={validationSchema}
                     onSubmit={(values, { resetForm }) => {
                         if (formType === 'login') {
                             // login
+                            dispatch(loginUser(values));
+                            resetForm();
                         } else {
                             // register
                             // dispatch({ type: AUTH_START });
                             dispatch(registerUser(values));
+                            resetForm();
                         }
                     }}
                 >

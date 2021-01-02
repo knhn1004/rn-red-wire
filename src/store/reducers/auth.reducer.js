@@ -3,6 +3,9 @@ import {
     AUTH_START,
     AUTH_FINISHED,
     CLEAN_AUTH_ERROR,
+    LOGOUT,
+    AUTO_LOAD_START,
+    AUTO_LOAD_FINISHED,
 } from '../actions/types';
 
 const INITIAL_STATE = {
@@ -10,6 +13,7 @@ const INITIAL_STATE = {
     isAuth: false,
     error: null,
     loading: false,
+    autoLoading: true,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -33,6 +37,20 @@ export default (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 error: null,
+            };
+        case LOGOUT:
+            return {
+                ...INITIAL_STATE,
+            };
+        case AUTO_LOAD_START:
+            return {
+                ...state,
+                autoLoading: true,
+            };
+        case AUTO_LOAD_FINISHED:
+            return {
+                ...state,
+                autoLoading: false,
             };
         default:
             return state;

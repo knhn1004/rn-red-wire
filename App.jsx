@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Provider, useSelector } from 'react-redux';
+import { Provider, useDispatch, useSelector } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import promiseMiddleware from 'redux-promise';
 import reducers from './src/store/reducers';
@@ -19,6 +19,8 @@ import { ThemeProvider } from 'react-native-elements';
 import Toast from 'react-native-toast-message';
 import { View, Text } from 'react-native';
 import thunk from 'redux-thunk';
+import Splash from './src/components/auth/splash';
+import { autoSignIn } from './src/store/actions';
 
 const store = createStore(
     reducers,
@@ -45,6 +47,12 @@ const MainDrawer = () => {
 function App() {
     const auth = useSelector(state => state.auth);
 
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(autoSignIn());
+    }, []);
+
     return (
         <NavigationContainer>
             <Stack.Navigator
@@ -56,6 +64,8 @@ function App() {
                     <Fragment>
                         <Stack.Screen name="Main" component={MainDrawer} />
                     </Fragment>
+                ) : auth.autoLoading ? (
+                    <Stack.Screen name="Splash" component={Splash} />
                 ) : (
                     <Stack.Screen name="Auth" component={AuthScreen} />
                 )}
